@@ -95,6 +95,7 @@
     <Compile Include="Entities\Route.cs" />
     <Compile Include="EF\RoutesContext.cs" />
     <Compile Include="Entities\RoutesMarker.cs" />
+    <Compile Include="Entities\TestClass.cs" />
     <Compile Include="Entities\WayPoint.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IRouteRepository.cs" />
