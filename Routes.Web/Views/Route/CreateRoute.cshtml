@@ -1,0 +1,143 @@
+﻿@model Routes.Dal.Entities.Route
+
+@{
+    ViewBag.Title = "Создать маршрут (простое добавление)";
+}
+<p>
+    Вы можете описать свой маршрут используя поля ввода начала и окончания маршрута. Для добавления промежуточных точек используйте
+    кнопку "Добавить промежуточную точку".
+</p>
+<p>
+    Если при определении Вашего маршрута возникают сложности, например, вы хотите описать горный маршрут или морское путешествие,
+    используйте @Html.ActionLink("Ручной способ добавления маршрута", "CreateRouteManually")
+</p>
+@*<div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div id="map-task"></div>
+            </div>
+            <div class="col-md-4">
+                <div class="row">
+                    <h5>Выберите способ вашего путешествия:</h5>
+
+                    <div id="mode-selector" class="controls">
+                        <input type="radio" name="type" id="changemode-walking" value="WALKING" checked="checked">
+                        <label for="changemode-walking">Пешком</label>
+
+                        <input type="radio" name="type" id="changemode-transit" value="TRANSIT">
+                        <label for="changemode-transit">Общественный транспорт</label>
+
+                        <input type="radio" name="type" id="changemode-driving" value="DRIVING">
+                        <label for="changemode-driving">На авто</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <h5>Введите начало своего маршрута:</h5>
+                    <input id="origin-input" class="controls" type="text" placeholder="Введите начало">
+                </div>
+                <div class="row">
+                    <h5>Вы можете добавить промежуточные точки путешествия</h5>
+                    <div id="way">
+                        <div id="wayPointsScope"></div>
+                        <input type="submit" id="btnAddWaypoints" class="btn btn-default btn-sm" value="Добавить промежуточную точку">
+
+                    </div>
+                </div>
+                <div class="row">
+                    <h5>Введите окончание своего маршрута:</h5>
+                    <input id="destination-input" class="controls" type="text" placeholder="Введите окончание">
+                </div>
+                <div class="row">
+                    <input type="submit" id="submit" class="btn btn-success btn-lg">
+                </div>
+                <div class="row">
+                    <div id="directions-panel">Путь вашего маршрута согласно введенных данных</div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>*@
+
+<ul class="nav nav-tabs">
+    <li role="presentation" class="active"><a href="#">Маршрут</a></li>
+    <li role="presentation"><a href="#">Места</a></li>
+</ul>
+@using (Html.BeginForm("CreateRoute", "Route", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div id="map-task"></div>
+            </div>
+            <div class="col-md-4">
+                <div class="row">
+                    <h5>Выберите способ вашего путешествия:</h5>
+
+                    <div id="mode-selector" class="controls form-group">
+                        @Html.RadioButtonFor(model => model.TravelType, "WALKING", new { @checked = "checked" })
+                        @Html.LabelFor(model => model.TravelType, "WALKING", htmlAttributes: new { @class = "" })
+                        @Html.ValidationMessageFor(model => model.TravelType, "", new { @class = "text-danger" })
+
+                        @Html.RadioButtonFor(model => model.TravelType, "DRIVING", null)
+                        @Html.LabelFor(model => model.TravelType, "DRIVING", htmlAttributes: new { @class = "" })
+                        @Html.ValidationMessageFor(model => model.TravelType, "", new { @class = "text-danger" })
+
+                        @Html.RadioButtonFor(model => model.TravelType, "TRANSIT", null)
+                        @Html.LabelFor(model => model.TravelType, "TRANSIT", htmlAttributes: new { @class = "" })
+                        @Html.ValidationMessageFor(model => model.TravelType, "", new { @class = "text-danger" })                       
+                    </div>
+                </div>
+                <div class="row">
+                    <h5>Введите начало своего маршрута:</h5>                    
+                    @Html.EditorFor(model => model.OriginPoint, new { htmlAttributes = new { @class = "controls form-group", placeholder = "Введите начало" } })
+                </div>
+                <div class="row">
+                    <h5>Вы можете добавить промежуточные точки путешествия</h5>
+                    <div id="way">
+                        <div id="wayPointsScope"></div>
+                        <input type="button" id="btnAddWaypoints" class="btn btn-default btn-sm" value="Добавить промежуточную точку">
+                    </div>
+                </div>
+                <div class="row">
+                    <h5>Введите окончание своего маршрута:</h5>
+                    @Html.EditorFor(model => model.DestinationPoint, new { htmlAttributes = new { @class = "controls", placeholder = "Введите окончание", id = "destination-input" } })                   
+                </div>
+                <div class="row">
+                    <button type="button" class="btn btn-success" id="btnShowRoute">Посмотреть маршрут</button>
+
+                    <input type="submit" id="submit" value="Сохранить" class="btn btn-success btn-lg">
+                </div>
+                <div class="row">
+                    <div id="directions-panel">Путь вашего маршрута согласно введенных данных</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-horizontal">
+        <hr />
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Вернуться назад", "Index","Home")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+<script src="~/Scripts/Routes/CreateRoute.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAX4qRmbIMnu-nD99XFxkfO1pw6TEi0OTc&libraries=places&callback=init"
+        async defer></script>

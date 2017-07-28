@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Routes.Dal.Entities.Route>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@Html.ActionLink("Создать простой маршрут","CreateRoute","Route")
+<h1>
+    Сохраненные маршруты
+</h1>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RouteEnterTupe)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TravelType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OriginPoint)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DestinationPoint)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.RouteEnterTupe)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TravelType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OriginPoint)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DestinationPoint)
+        </td>
+        <td>
+            @Html.ActionLink("Посмотреть маршрут", "ShowRoute","Route", new { id=item.RouteID },null)
+           
+        </td>
+    </tr>
+}
+
+</table>

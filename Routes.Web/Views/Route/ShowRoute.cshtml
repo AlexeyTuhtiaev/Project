@@ -1,0 +1,75 @@
+﻿@model Routes.Dal.Entities.Route
+
+
+@{
+    ViewBag.Title = "Маршрут";
+}
+
+@using System.Text;
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div id="map-task"></div>
+        </div>
+        <div class="col-md-4">
+            <div class="row">
+                <h5 id ="travelMode" value="@Model.TravelType">Способ вашего путешествия: @Model.TravelType</h5>
+            </div>
+            <div class="row">
+                <h5>Начало маршрута:</h5>
+                <input id="origin-input" class="controls" type="text" value="@Model.OriginPoint">
+            </div>
+            <div class="row">
+                @if (Model.WayPoints.Count != 0)
+                {
+                    <h5>Промежуточные точки путешествия:</h5>
+                }
+                
+                <div id="way">
+                    <div id="wayPointsScope">
+                        @{
+                            for (int i = 0; i < Model.WayPoints.Count; i++)
+                            {
+                                StringBuilder result = new StringBuilder();
+                                TagBuilder newWayPoint = new TagBuilder("div");
+                                TagBuilder input = new TagBuilder("input");
+                                input.MergeAttribute("value", Model.WayPoints[i].Point);
+                                input.MergeAttribute("id", i.ToString());
+                                input.MergeAttribute("name", "waypoint");
+                                input.MergeAttribute("class", "controls");
+                                input.MergeAttribute("type", "text");
+                                newWayPoint.InnerHtml = input.ToString();
+
+                                result.Append(newWayPoint);
+
+                                @MvcHtmlString.Create(result.ToString())
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <h5>Окончание маршрута:</h5>
+                <input id="destination-input" class="controls" type="text" value="@Model.DestinationPoint">
+            </div>
+            <div class="row">
+                <div id="directions-panel">Путь вашего маршрута согласно введенных данных</div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+
+<script src="@RouteJs.RouteJsHandler.HandlerUrl"></script>
+<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+
+@Scripts.Render("~/bundles/jquery")
+
+<script src="~/Scripts/Routes/ShowRoute.js"></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAX4qRmbIMnu-nD99XFxkfO1pw6TEi0OTc&libraries=places&callback=init"
+        async defer></script>
