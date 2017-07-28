@@ -16,7 +16,7 @@ namespace Routes.Dal.Entities
         public string RouteEnterTupe { get; set; }//способ ввода маршрута (ручной\автоматический)
 
         [Required]
-        public string TravelType { get; set; }
+        public string TravelType { get; set; }//тип путешествия
 
         [Required]
         public string OriginPoint { get; set; }
