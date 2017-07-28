@@ -12,6 +12,6 @@ namespace Routes.Dal.Entities
         public byte[] Image { get; set; }
         public string MimeType { get; set; }
 
-        public RoutesMarker RoutesMarker { get; set; }
+        public Marker RoutesMarker { get; set; }
     }
 }

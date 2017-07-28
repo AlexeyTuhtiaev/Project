@@ -10,7 +10,7 @@ namespace Routes.Dal.Interfaces
 {
     public interface IRouteRepository : IRepository<Route>
     {
-        IEnumerable<RoutesMarker> GetRouteMarkers(int Id);
+        
         Task<Photo> GetPhotoAsync(int Id);
         int GetFirstPhotoId(int routeId, int markerNumber);
     }

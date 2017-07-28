@@ -54,9 +54,14 @@ namespace Routes.Web.App_Start
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
 
                 kernel
-                     .Bind<IRouteRepository > ()
-                     .To<RouteRepository>()
-                     .WithConstructorArgument("name", "RoutesDBConnection");
+                    .Bind<IRouteRepository>()
+                    .To<RouteRepository>()
+                    .WithConstructorArgument("name", "RoutesDBConnection");
+
+                kernel
+                    .Bind<IMarkerRepository>()
+                    .To<MarkerRepository>()
+                    .WithConstructorArgument("name", "RoutesDBConnection");
 
                 //kernel
                 //    .Bind<IUnitOfWork>()

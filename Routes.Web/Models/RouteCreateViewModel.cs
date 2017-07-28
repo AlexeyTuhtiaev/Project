@@ -10,6 +10,6 @@ namespace Routes.Web.Models
     {
         public Route Route { get; set; }
         public List<WayPoint> WayPoints { get; set; }
-        public List<RoutesMarker> RoutesMarkers { get; set; }
+        public List<Marker> RoutesMarkers { get; set; }
     }
 }

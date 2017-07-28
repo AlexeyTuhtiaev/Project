@@ -12,22 +12,24 @@ namespace Routes.Web.Controllers
 {
     public class RouteController : Controller
     {
-        IRouteRepository repository;
+        IRouteRepository routeRepository;
+        IMarkerRepository markerRepository;
 
-        public RouteController(IRouteRepository repo)
+        public RouteController(IRouteRepository repoR, IMarkerRepository repoM)
         {
-            repository = repo;
+            routeRepository = repoR;
+            markerRepository = repoM;
         }
 
         // GET: Route
         public ActionResult ShowRoute(int Id)
         {
-            return View(repository.GetById(Id));
+            return View(routeRepository.GetById(Id));
         }
 
         public JsonResult GetMarkers(int Id)
         {
-            List<RoutesMarker> markers = repository.GetRouteMarkers(Id).ToList();
+            List<Marker> markers = markerRepository.GetRouteMarkers(Id).ToList();
             return Json(markers,JsonRequestBehavior.AllowGet);
         }
 
@@ -40,7 +42,7 @@ namespace Routes.Web.Controllers
                 return HttpNotFound();
             }
 
-            Route route = repository.GetById((int)id);
+            Route route = routeRepository.GetById((int)id);
 
             if (route != null)
             {
@@ -59,7 +61,7 @@ namespace Routes.Web.Controllers
         public ActionResult CreateRoute(Route route)
         {
             route.RouteEnterTupe = "Simple";
-            repository.Create(route);
+            routeRepository.Create(route);
 
             return RedirectToAction("Index","Home");
         }
@@ -73,16 +75,16 @@ namespace Routes.Web.Controllers
         [HttpPost]
         public ActionResult CreateRouteManually(Route route)
         {
-            repository.Create(route);
+            routeRepository.Create(route);
 
             return RedirectToAction("Index");
         }
 
         public async Task<FileContentResult> GetImage(int routeId,int markerNumber)
         {
-            int photoId = repository.GetFirstPhotoId(routeId, markerNumber);
+            int photoId = routeRepository.GetFirstPhotoId(routeId, markerNumber);
 
-            Photo ph = await repository.GetPhotoAsync(photoId);
+            Photo ph = await routeRepository.GetPhotoAsync(photoId);
 
             if (ph != null && ph.Image != null)
                 return File(ph.Image, ph.MimeType);

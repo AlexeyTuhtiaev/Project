@@ -64,18 +64,14 @@ namespace Routes.Dal.Repositories
         {
             
             return context.Photos.Where(item => item.RoutesMarker.RouteID == routeId)
-                                 .Where(item=>item.RoutesMarker.RoutesMarkerID== markerNumber)
+                                 .Where(item=>item.RoutesMarker.MarkerID== markerNumber)
                                  .FirstOrDefault()
                                  .PhotoID;
 
             throw new NotImplementedException();
         }
 
-        public IEnumerable<RoutesMarker> GetRouteMarkers(int Id)
-        {
-            IEnumerable<RoutesMarker> markers = context.RoutesMarkers.Where(item => item.RouteID == Id);
-          return  markers;
-        }
+        
 
         public void Update(Route t)
         {

@@ -31,7 +31,7 @@ namespace Routes.Dal.Entities
 
         public virtual List<WayPoint> WayPoints { get; set; }
         
-        public  List<RoutesMarker> RoutesMarker { get; set; }// убрал virtual, тк json сериализация зацикливается..
+        public  List<Marker> RoutesMarker { get; set; }// убрал virtual, тк json сериализация зацикливается..
 
         public ApplicationUser ApplicationUser { get; set; }
     }

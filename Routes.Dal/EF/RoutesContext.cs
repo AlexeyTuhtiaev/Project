@@ -18,10 +18,10 @@ namespace Routes.Dal.Entities
         ///// <param name="name"> имя строки подключения </param>
         public RoutesContext() : base("RoutesDBConnection")
         {
-          //  Database.SetInitializer(new RoutesContextInitializer());
+            Database.SetInitializer(new RoutesContextInitializer());
         }
         public DbSet<Route> Routes { get; set; }
-        public DbSet<RoutesMarker> RoutesMarkers { get; set; }
+        public DbSet<Marker> RoutesMarkers { get; set; }
         public DbSet<Photo> Photos { get; set; }
         
         public static RoutesContext Create()
@@ -107,10 +107,10 @@ namespace Routes.Dal.Entities
                 MimeType="image/jpeg" }
             };
 
-            List<RoutesMarker> routesMarkers1 = new List<RoutesMarker> {
-                new RoutesMarker {Title="Ресторан", Content ="Описание ресторана",Photos=photos1,
+            List<Marker> routesMarkers1 = new List<Marker> {
+                new Marker {Title="Ресторан", Content ="Описание ресторана",Photos=photos1,
                     GeoLat = "53.917959",GeoLong = "27.596525", Icon="https://maps.google.com/mapfiles/kml/shapes/parking_lot_maps.png"},
-                new RoutesMarker {Title="Библиотека", Content ="Описание Библиотеки",Photos=photos2,
+                new Marker {Title="Библиотека", Content ="Описание Библиотеки",Photos=photos2,
                     GeoLat = "53.930914",GeoLong = "27.645416", Icon="https://maps.google.com/mapfiles/kml/shapes/library_maps.png"}
             };
 

@@ -46,7 +46,7 @@
         overflow: hidden;
     }
 
-.gm-style img {
+.imgwrapper.gm-style->img {
     max-width: 100%!important;
 }
 

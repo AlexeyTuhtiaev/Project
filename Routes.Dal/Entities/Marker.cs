@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Routes.Dal.Entities
 {
-   public class RoutesMarker
+   public class Marker
     {
-        public int RoutesMarkerID { get; set; }
+        public int MarkerID { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
         public string GeoLat { get; set; }
