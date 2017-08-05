@@ -41,18 +41,21 @@
 }
 
     .marker-infoWindow img {
-        /*height: 50px;
-    width: 80px;*/
+        
         overflow: hidden;
     }
 
-.imgwrapper.gm-style->img {
-    max-width: 100%!important;
+.marker-infoWindow .imgwrapper img {
+    max-width: 100%;
 }
 
 .imgwrapper {
     width: 80%;
 }
+
+/*#img-in-infoWindow{
+    max-width: 100%!important;
+}*/
 
 #origin-input,
 #destination-input {
