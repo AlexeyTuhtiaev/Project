@@ -41,12 +41,22 @@
 }
 
     .marker-infoWindow img {
+<<<<<<< HEAD
         overflow: hidden;
     }
 
     .marker-infoWindow .imgwrapper img {
         max-width: 100%;
     }
+=======
+        
+        overflow: hidden;
+    }
+
+.marker-infoWindow .imgwrapper img {
+    max-width: 100%;
+}
+>>>>>>> origin/fix_Adding_route_page
 
 .imgwrapper {
     width: 80%;
