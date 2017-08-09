@@ -1,6 +1,4 @@
-﻿//document.onmousemove= showMarkers;
-
-var map;
+﻿var map;
 function init() {
 
     var place = new google.maps.LatLng(53.903616, 27.555244);
@@ -28,7 +26,7 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
             stopover: true
         }));
     }
-
+    
     var travelModeElement = document.getElementById('travelMode');
     var travelMode = travelModeElement.getAttribute('value');
 
@@ -100,7 +98,7 @@ function showMarkers() {
             var imgUrl = Router.action('Route', 'GetImage', { routeId: strRouteId, markerNumber:i+1});
             var infowindow = new google.maps.InfoWindow({
                 content: "<div class='marker-infoWindow '><h5>" + item.Content +
-                    "</h5><div class='imgwrapper'><img class='img-responsive' src=" + imgUrl + " alt='No Image \\' /></div></div>"
+                    "</h5><div class='imgwrapper'><img id='img-in-infoWindow' class='img-responsive' src=" + imgUrl + " alt='No Image \\' /></div></div>"
             });
 
             // обработчик нажатия на маркер объекта

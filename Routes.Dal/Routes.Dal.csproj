@@ -96,6 +96,7 @@
     <Compile Include="EF\RoutesContext.cs" />
     <Compile Include="Entities\Marker.cs" />
     <Compile Include="Entities\WayPoint.cs" />
+    <Compile Include="Interfaces\IGaleryRepository.cs" />
     <Compile Include="Interfaces\IMarkerRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IRouteRepository.cs" />
@@ -103,6 +104,7 @@
     <Compile Include="Managers\ApplicationSignInManager.cs" />
     <Compile Include="Managers\ApplicationUserManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\GaleryRepository.cs" />
     <Compile Include="Repositories\MarkerRepository.cs" />
     <Compile Include="Repositories\RouteRepository.cs" />
   </ItemGroup>

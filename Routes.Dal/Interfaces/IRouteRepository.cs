@@ -9,9 +9,11 @@ using System.Threading.Tasks;
 namespace Routes.Dal.Interfaces
 {
     public interface IRouteRepository : IRepository<Route>
-    {
-        
+    {        
         Task<Photo> GetPhotoAsync(int Id);
         int GetFirstPhotoId(int routeId, int markerNumber);
+        IEnumerable<WayPoint> GetWayPoints(int routeId);
+        void DeleteWayPoint(WayPoint wp);
+        
     }
 }

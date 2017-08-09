@@ -1,0 +1,67 @@
+﻿@model Routes.Dal.Entities.Marker
+
+@{
+    ViewBag.Title = "Создать маршрут (простое добавление)";
+}
+<p>
+    Вы можете описать свой маршрут используя поля ввода начала и окончания маршрута. Для добавления промежуточных точек используйте
+    кнопку "Добавить промежуточную точку".
+</p>
+<p>
+    Если при определении Вашего маршрута возникают сложности, например, вы хотите описать горный маршрут или морское путешествие,
+    используйте @Html.ActionLink("Ручной способ добавления маршрута", "CreateRouteManually")
+</p>
+
+<div class="container">
+    @Html.Action("RouteMenu", "Menu", new { c = Request.RequestContext.RouteData.Values["controller"] })
+</div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div id="map-task"></div>
+            </div>
+            <div class="col-md-4">
+                <div class="row">
+                    <h5>Места:</h5>
+                </div>
+                <div class="row">
+                    <h5>Выберите иконку для маркера: @ViewBag.routeId</h5>
+                    <div class="row">
+                        <a class="marker-icon photo marker-icon-active" id="photo" name="http://maps.google.com/mapfiles/kml/pal4/icon46.png"></a>
+                        <a class="marker-icon eat" id="eat" name="http://maps.google.com/mapfiles/kml/pal2/icon38.png"></a>
+                        <a class="marker-icon info" id="info" name="http://maps.google.com/mapfiles/kml/pal3/icon43.png"></a>
+                        <a class="marker-icon pushpin" id="pushpin" name="http://maps.google.com/mapfiles/kml/pushpin/grn-pushpin.png"></a>
+                        <a class="marker-icon shoppind" id="shoppind" name="http://maps.google.com/mapfiles/kml/shapes/grocery.png"></a>
+                    </div>
+
+                    @* Marker accordion *@
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default" id="accordionScope"></div>
+                    </div>
+
+
+
+                </div>
+
+                <div class="row">
+                    <input type="button" id="submit" value="Сохранить" class="btn btn-success btn-lg">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+<div>
+    @Html.ActionLink("Вернуться назад", "Index", "Home")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+<script src="~/Scripts/Routes/CreateRouteMarkers.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAX4qRmbIMnu-nD99XFxkfO1pw6TEi0OTc&libraries=places&callback=init"
+        async defer></script>

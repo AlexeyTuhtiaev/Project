@@ -40,8 +40,8 @@
             @Html.DisplayFor(modelItem => item.DestinationPoint)
         </td>
         <td>
-            @Html.ActionLink("Посмотреть маршрут", "ShowRoute","Route", new { id=item.RouteID },null)
-           
+            @Html.ActionLink("Посмотреть маршрут", "ShowRoute","Route", new { Id = item.RouteId },null) <br />|
+           @Html.ActionLink("Edit", "EditRoute", "Route", new { routeId = item.RouteId }, null)
         </td>
     </tr>
 }

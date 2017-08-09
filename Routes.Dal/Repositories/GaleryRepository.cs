@@ -1,26 +1,26 @@
-﻿using Routes.Dal.Entities;
-using Routes.Dal.Interfaces;
+﻿using Routes.Dal.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Routes.Dal.Entities;
 
 namespace Routes.Dal.Repositories
 {
-   public class MarkerRepository:IMarkerRepository
-    {    
+    public class GaleryRepository : IGaleryRepository
+    {
         RoutesContext context;
         /// <summary>
         /// Конструктор класса
         /// </summary>
         /// <param name="name"> имя строки подключения </param>
-        public MarkerRepository(string name)
+        public GaleryRepository(string name)
         {
             context = new RoutesContext();
         }
 
-        public int Create(Marker t)
+        public int Create(Photo t)
         {
             throw new NotImplementedException();
         }
@@ -30,35 +30,29 @@ namespace Routes.Dal.Repositories
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Marker> Find(Func<Marker, bool> predicate)
+        public IEnumerable<Photo> Find(Func<Photo, bool> predicate)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Marker> GetAll()
+        public IEnumerable<Photo> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public Task<Marker> GetAsync(int Id)
+        public Task<Photo> GetAsync(int Id)
         {
             throw new NotImplementedException();
         }
 
-        public Marker GetById(int Id)
+        public Photo GetById(int Id)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(Marker t)
+        public void Update(Photo t)
         {
             throw new NotImplementedException();
-        }
-
-        public IEnumerable<Marker> GetRouteMarkers(int Id)
-        {
-            IEnumerable<Marker> markers = context.RoutesMarkers.Where(item => item.RouteID == Id);
-            return markers;
         }
     }
 }

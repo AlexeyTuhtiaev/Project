@@ -1,0 +1,19 @@
+﻿@model IEnumerable<Routes.Web.Models.MenuItem>
+
+<ul class="nav nav-tabs">
+    @foreach (var item in Model)
+    {
+        <li class="@item.Active">
+            @if (item.Controller == "Marker")
+            {
+                @Html.ActionLink(item.Name, item.Action, item.Controller, new { routeId = ViewBag.RouteId }, null);
+            }
+            else
+            {
+                @Html.ActionLink(item.Name, item.Action, item.Controller);
+            }
+
+
+        </li>
+    }
+  </ul>

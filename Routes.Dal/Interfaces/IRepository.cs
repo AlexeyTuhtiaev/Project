@@ -12,7 +12,7 @@ namespace Routes.Dal.Interfaces
         IEnumerable<T> GetAll();
         T GetById(int Id);
         IEnumerable<T> Find(Func<T, bool> predicate);
-        void Create(T t);
+        int Create(T t);
         void Update(T t);
         void Delete(int Id);
         Task<T> GetAsync(int Id);

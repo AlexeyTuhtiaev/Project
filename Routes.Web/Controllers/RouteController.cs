@@ -27,26 +27,52 @@ namespace Routes.Web.Controllers
             return View(routeRepository.GetById(Id));
         }
 
-        public JsonResult GetMarkers(int Id)
-        {
-            List<Marker> markers = markerRepository.GetRouteMarkers(Id).ToList();
-            return Json(markers,JsonRequestBehavior.AllowGet);
-        }
 
         //Edit
         [HttpGet]
-        public ActionResult EditRoute(int? id)
+        public ActionResult EditRoute(int? routeId)
         {
-            if (id == null)
+            if (routeId == null)
             {
                 return HttpNotFound();
             }
 
-            Route route = routeRepository.GetById((int)id);
+            Route route = routeRepository.GetById((int)routeId);
 
             if (route != null)
             {
                 return View(route);
+            }
+            return HttpNotFound();
+        }
+
+        //Edit HttpPost
+        [HttpPost]
+        public ActionResult EditRoute(Route route)
+        {
+            if (route != null)
+            {
+                List<WayPoint> routeWayPoint = routeRepository.GetWayPoints(route.RouteId).ToList();
+
+                if (route.WayPoints != null && route.WayPoints.Any())
+                {
+                    foreach (WayPoint w in routeWayPoint)
+                    {
+                        if (route.WayPoints.Any(item => item.Point == w.Point))
+                            continue;
+                        else
+                        {
+                            routeRepository.DeleteWayPoint(w);
+                        }
+                    }
+                    route.WayPoints.Union(routeRepository.GetWayPoints(route.RouteId).ToList());
+                }
+                else
+                    foreach (WayPoint w in routeWayPoint)
+                        routeRepository.DeleteWayPoint(w);
+
+                routeRepository.Update(route);
+                return RedirectToAction("EditRoute", "Route", new { routeId = route.RouteId });
             }
             return HttpNotFound();
         }
@@ -61,9 +87,9 @@ namespace Routes.Web.Controllers
         public ActionResult CreateRoute(Route route)
         {
             route.RouteEnterTupe = "Simple";
-            routeRepository.Create(route);
+            int createdRouteId = routeRepository.Create(route);
 
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("EditRoute", "Route", new { routeId = createdRouteId });
         }
 
         //Create route manually
@@ -80,7 +106,14 @@ namespace Routes.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<FileContentResult> GetImage(int routeId,int markerNumber)
+
+        public JsonResult GetWayPoints(int routeId)
+        {
+            List<WayPoint> wayPoint = routeRepository.GetWayPoints(routeId).ToList();
+            return Json(wayPoint, JsonRequestBehavior.AllowGet);
+        }
+
+        public async Task<FileContentResult> GetImage(int routeId, int markerNumber)
         {
             int photoId = routeRepository.GetFirstPhotoId(routeId, markerNumber);
 

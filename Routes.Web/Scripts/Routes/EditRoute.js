@@ -1,6 +1,24 @@
 ﻿var map;
 function init() {
+    //get route's waypoints
+    //получаю строку запроса
+    var query = document.location.href;                  // Получение строки запроса.
+    var hrefValues = query.split('=');                   // Разделение строки по амперсанду
+    var routeId = hrefValues[hrefValues.length - 1];
 
+    var url = Router.action('Route', 'GetWayPoints', { routeId: routeId });
+    $.getJSON(url, function (data) {
+        // Проходим по всем данным и формируем input
+        $.each(data, function (i, item) {
+            addExistingWaypoint(item, i);
+        })
+    });
+
+    setTimeout(executeMap, 3500);
+}
+
+
+function executeMap() {
     var place = new google.maps.LatLng(53.903616, 27.555244);
     var directionsService = new google.maps.DirectionsService;
     var directionsDisplay = new google.maps.DirectionsRenderer;
@@ -14,17 +32,29 @@ function init() {
         calculateAndDisplayRoute(directionsService, directionsDisplay);
     });
     document.getElementById('btnAddWaypoints').addEventListener('click', function () {
+        $("#submit").hide();
         addWaypoint();
     });
 
-    document.getElementById('OriginPoint').focus();
+    document.getElementById('OriginPoint').addEventListener('input', function () {
+        $("#submit").hide();
+    });
 
-    
-       // $('li').not('.active' ).hide();
-    $('#submit').hide();
-    
+    var radioTravelType = document.getElementsByName('TravelType');
+    for (var i = 0; i < radioTravelType.length; i++) {
+
+        radioTravelType[i].addEventListener('change', function () {
+            $("#submit").hide();
+        });
+    }
+
+
+
+    $("#submit").hide();
 
     new AutocompleteDirectionsHandler(map);
+
+    calculateAndDisplayRoute(directionsService, directionsDisplay);
 }
 
 function AutocompleteDirectionsHandler(map) {
@@ -43,6 +73,8 @@ function AutocompleteDirectionsHandler(map) {
         originInput, { placeIdOnly: true });
     var destinationAutocomplete = new google.maps.places.Autocomplete(
         destinationInput, { placeIdOnly: true });
+
+
 }
 
 function AutocompleteWaypointHandler(map) {
@@ -63,6 +95,9 @@ var k = 0;
 function addWaypoint() {
 
     var wayPointsScope = document.getElementById('wayPointsScope');
+
+    k = wayPointsScope.childElementCount;
+
     var newWayPoint = document.createElement("div");
 
     var input = document.createElement("input");
@@ -72,6 +107,13 @@ function addWaypoint() {
     input.setAttribute('type', 'text');
     input.setAttribute('placeholder', 'Введите промежуточную точку');
     newWayPoint.appendChild(input);
+
+    var inputNumbering = document.createElement("input");
+    inputNumbering.setAttribute('id', 'Numbering');
+    inputNumbering.setAttribute('name', 'WayPoints' + '[' + k + '].Numbering');
+    inputNumbering.setAttribute('type', 'hidden');
+    inputNumbering.setAttribute('value', k);
+    newWayPoint.appendChild(inputNumbering);
 
     var btnDelete = document.createElement('button');
     btnDelete.setAttribute('class', 'btn btn-danger btn-xs pull-right');
@@ -91,6 +133,46 @@ function addWaypoint() {
 }
 
 
+function addExistingWaypoint(waypoint, i) {
+
+    var wayPointsScope = document.getElementById('wayPointsScope');
+    var newWayPoint = document.createElement("div");
+
+    var input = document.createElement("input");
+    input.setAttribute('id', 'WayPoints' + i);
+    input.setAttribute('name', 'WayPoints' + '[' + i + '].Point');
+    input.setAttribute('class', 'controls WayPoints');
+    input.setAttribute('type', 'text');
+    input.setAttribute('placeholder', 'Введите промежуточную точку');
+    input.value = waypoint.Point;
+    newWayPoint.appendChild(input);
+
+    var inputNumbering = document.createElement("input");
+    inputNumbering.setAttribute('id', 'Numbering');
+    inputNumbering.setAttribute('name', 'WayPoints' + '[' + k + '].Numbering');
+    inputNumbering.setAttribute('type', 'hidden');
+    inputNumbering.setAttribute('value', k);
+    inputNumbering.setAttribute('class', 'Numbering');
+    newWayPoint.appendChild(inputNumbering);
+
+    var btnDelete = document.createElement('button');
+    btnDelete.setAttribute('class', 'btn btn-danger btn-xs pull-right');
+    btnDelete.setAttribute('id', 'btnDelete' + i);
+    btnDelete.innerHTML = 'Удалить промежуточную точку';
+    newWayPoint.appendChild(btnDelete);
+
+    wayPointsScope.appendChild(newWayPoint);
+
+    document.getElementById('btnDelete' + i).addEventListener('click', function () {
+        deleteWaypoint(this);
+    });
+
+    new AutocompleteWaypointHandler(map);
+
+    k++;
+}
+
+
 function deleteWaypoint(e) {
 
     var deletedbtn = document.getElementById(e.id);
@@ -98,6 +180,27 @@ function deleteWaypoint(e) {
 
     var wayPointsScope = document.getElementById('wayPointsScope');
     wayPointsScope.removeChild(parent);
+
+
+    setNames();
+
+    $('#submit').hide();
+}
+
+function setNames() {
+    var wayPointsScope = document.getElementById('wayPointsScope');
+    var ch = wayPointsScope.children;
+
+    var wayPoints = document.getElementsByClassName('WayPoints');
+    var numbering = document.getElementsByClassName('Numbering');
+
+    for (var i = 0; i < ch.length; i++) {
+        wayPoints[i].setAttribute('id', 'WayPoints' + i);
+        wayPoints[i].setAttribute('name', 'WayPoints' + '[' + i + '].Point');
+
+        numbering[i].setAttribute('name', 'WayPoints' + '[' + i + '].Numbering');
+        numbering[i].setAttribute('value', i);
+    }
 }
 
 AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function (autocomplete, mode) {
@@ -139,11 +242,6 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
             break;
         }
     }
-
-    var origin = document.getElementById('OriginPoint').value;
-    var destination = document.getElementById('destination-input').value;
-    //var c = google.maps.Place(document.getElementById('origin-input').value);
-    //var f = document.getElementById('destination-input').value;
 
     directionsService.route({
         origin: document.getElementById('OriginPoint').value,

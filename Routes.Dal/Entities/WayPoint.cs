@@ -10,6 +10,7 @@ namespace Routes.Dal.Entities
     {
         public int WayPointID { get; set; }
         public string Point { get; set; }
+        public int Numbering { get; set; }
 
         public int RouteId { get; set; }
         public Route Route { get; set; }

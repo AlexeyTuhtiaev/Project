@@ -41,18 +41,20 @@
 }
 
     .marker-infoWindow img {
-        /*height: 50px;
-    width: 80px;*/
         overflow: hidden;
     }
 
-.imgwrapper.gm-style->img {
-    max-width: 100%!important;
-}
+    .marker-infoWindow .imgwrapper img {
+        max-width: 100%;
+    }
 
 .imgwrapper {
     width: 80%;
 }
+
+/*#img-in-infoWindow{
+    max-width: 100%!important;
+}*/
 
 #origin-input,
 #destination-input {
@@ -80,3 +82,46 @@
         font-size: 13px;
         font-weight: 300;
     }
+
+.marker-icon {
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: top;
+    border-radius: 50%;
+}
+.marker-icon-active {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.3);
+ }
+
+
+    .marker-icon:hover {
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    }
+
+
+
+.photo{
+    background: url(http://maps.google.com/mapfiles/kml/pal4/icon46.png) no-repeat;
+    background-size: cover;
+}
+
+.eat{
+    background: url(http://maps.google.com/mapfiles/kml/pal2/icon38.png) no-repeat;
+    background-size: cover;
+}
+
+ .info{
+    background: url(http://maps.google.com/mapfiles/kml/pal3/icon43.png) no-repeat;
+    background-size: cover;
+}
+ .pushpin{
+    background: url(http://maps.google.com/mapfiles/kml/pushpin/grn-pushpin.png) no-repeat;
+    background-size: cover;
+}
+ .shoppind{
+    background: url(http://maps.google.com/mapfiles/kml/shapes/grocery.png) no-repeat;
+    background-size: cover;
+}
+

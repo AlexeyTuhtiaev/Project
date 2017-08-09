@@ -10,7 +10,7 @@ namespace Routes.Dal.Entities
 {
     public class Route
     {
-        public int RouteID { get; set; }
+        public int RouteId { get; set; }
 
         [Display(Name ="Способ ввода маршрута")]
         public string RouteEnterTupe { get; set; }//способ ввода маршрута (ручной\автоматический)

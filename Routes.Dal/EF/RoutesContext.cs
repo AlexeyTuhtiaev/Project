@@ -23,7 +23,9 @@ namespace Routes.Dal.Entities
         public DbSet<Route> Routes { get; set; }
         public DbSet<Marker> RoutesMarkers { get; set; }
         public DbSet<Photo> Photos { get; set; }
-        
+        public DbSet<WayPoint> WayPoints { get; set; }
+
+
         public static RoutesContext Create()
         {
             return new RoutesContext();
@@ -88,10 +90,18 @@ namespace Routes.Dal.Entities
             //string uID = simpleUser.Id;
             //userManager.AddToRole(uID, "user");
 
-            List<WayPoint> wayPoints1 = new List<WayPoint> {
-                new WayPoint { WayPointID =1, Point ="Минск, Беларусь"},
-                new WayPoint { WayPointID =2, Point ="Могилев, Могилевская область, Беларусь"}
-            };
+
+            WayPoint wayPoint1 = new WayPoint { RouteId = 1, Numbering = 1, WayPointID = 1, Point = "Минск, Беларусь" };
+            WayPoint wayPoint2 = new WayPoint { RouteId = 1, Numbering = 2, WayPointID = 2, Point = "Могилев, Могилевская область, Беларусь" };
+            WayPoint wayPoint3 = new WayPoint { RouteId = 2, Numbering = 1, WayPointID =3, Point = "брест, Гродненская область, Беларусь" };
+            WayPoint wayPoint4 = new WayPoint { RouteId = 2, Numbering = 2, WayPointID = 4, Point = "Быхов, Могилевская область, Беларусь" };
+            WayPoint wayPoint5 = new WayPoint { RouteId = 3, Numbering = 1, WayPointID = 5, Point = "Лепель, Витебская область, Беларусь" };
+
+            context.WayPoints.Add(wayPoint1);
+            context.WayPoints.Add(wayPoint2);
+            context.WayPoints.Add(wayPoint3);
+            context.WayPoints.Add(wayPoint4);
+            context.WayPoints.Add(wayPoint5);
 
             List<Photo> photos1 = new List<Photo> {
                 new Photo { Image =File.ReadAllBytes(@"d:\LEXA\БГУИР\DP\myDP\DiplomaPaper\DPPhotos\1.jpg"),
@@ -115,14 +125,14 @@ namespace Routes.Dal.Entities
             };
 
             List<Route> routes = new List<Route> {
-                new Route {ApplicationUser=userAdmin, RouteID = 1, RouteEnterTupe = "Simple",TravelType="WALKING",WayPoints=wayPoints1,
+                new Route {ApplicationUser=userAdmin, RouteId = 1, RouteEnterTupe = "Simple",TravelType="WALKING",
                     OriginPoint ="Брест, Брестская область, Беларусь",DestinationPoint="Гомель, Гомельская область, Беларусь",
                 Description="Некоторое описание маршрута Брест Некоторое описание маршрута Некоторое описание маршрута ",
                 RoutesMarker=routesMarkers1},
-                new Route { ApplicationUser=userAdmin,RouteID = 2, RouteEnterTupe = "Simple",TravelType="DRIVING",
+                new Route { ApplicationUser=userAdmin,RouteId = 2, RouteEnterTupe = "Simple",TravelType="DRIVING",
                     OriginPoint ="Гродно, Гродненская область, Беларусь",DestinationPoint="Минск, Беларусь" ,
                 Description="Некоторое описание маршрута Гродно Некоторое описание маршрута Некоторое описание маршрута "},
-                new Route {ApplicationUser=userAdmin, RouteID = 3, RouteEnterTupe = "Simple",TravelType="WALKING",
+                new Route {ApplicationUser=userAdmin, RouteId = 3, RouteEnterTupe = "Simple",TravelType="WALKING",
                     OriginPoint ="Витебск, Витебская область, Беларусь",DestinationPoint="Минск, Беларусь" ,
                 Description="Некоторое описание маршрута Витебск Некоторое описание маршрута Некоторое описание маршрута "}
             };
